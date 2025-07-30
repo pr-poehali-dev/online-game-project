@@ -3,8 +3,30 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import Icon from "@/components/ui/icon";
+import SpaceGame from "@/components/SpaceGame";
+import { useState } from "react";
 
 const Index = () => {
+  const [currentView, setCurrentView] = useState<'home' | 'game'>('home');
+
+  if (currentView === 'game') {
+    return (
+      <div className="min-h-screen bg-black">
+        <div className="absolute top-4 left-4 z-50">
+          <Button 
+            onClick={() => setCurrentView('home')} 
+            variant="outline" 
+            size="sm" 
+            className="border-gray-500 text-gray-300 hover:bg-slate-700"
+          >
+            <Icon name="ArrowLeft" className="mr-2" size={16} />
+            Назад
+          </Button>
+        </div>
+        <SpaceGame />
+      </div>
+    );
+  }
   const achievements = [
     { id: 1, title: "Первая победа", desc: "Выиграй первую игру", progress: 100, icon: "Trophy", unlocked: true },
     { id: 2, title: "Скоростной", desc: "Закончи игру за 5 минут", progress: 75, icon: "Zap", unlocked: false },
@@ -35,6 +57,7 @@ const Index = () => {
             </p>
             <Button 
               size="lg" 
+              onClick={() => setCurrentView('game')}
               className="bg-gradient-to-r from-game-orange to-red-500 hover:from-red-500 hover:to-game-orange text-white px-8 py-4 text-lg font-bold rounded-full shadow-2xl hover:shadow-game-orange/50 transition-all duration-300 animate-scale-in"
             >
               <Icon name="Play" className="mr-2" size={24} />
@@ -157,7 +180,10 @@ const Index = () => {
             </CardHeader>
             <CardContent className="text-center">
               <p className="text-gray-300 mb-6">Сражайся с другими игроками в реальном времени</p>
-              <Button className="w-full bg-game-orange hover:bg-red-500 text-white font-bold">
+              <Button 
+                onClick={() => setCurrentView('game')}
+                className="w-full bg-game-orange hover:bg-red-500 text-white font-bold"
+              >
                 ИГРАТЬ
               </Button>
             </CardContent>
